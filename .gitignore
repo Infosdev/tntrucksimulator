@@ -1,0 +1,66 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Asset meta files for folders Unity itself ignores
+/[Aa]ssets/AssetStoreTools*
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Never commit generated solution/project files
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
+.idea/
+.vscode/
+
+# Build artefacts
+*.apk
+*.aab
+*.unitypackage
+*.app
+/[Bb]uild[Oo]utput/
+crashlytics-build.properties
+
+# Android
+*.keystore
+*.jks
+google-services.json
+/[Aa]ssets/[Pp]lugins/[Aa]ndroid/*.aar
+
+# iOS
+*.mobileprovision
+*.p12
+
+# Secrets -- the AES save key, API keys, service accounts (sections S, V, X)
+/[Aa]ssets/_Project/Settings/Secrets*
+*.secrets.json
+.env
+.env.*
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Addressables build output (keep the settings, drop the build)
+/[Ss]erver[Dd]ata/
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/link.xml*
