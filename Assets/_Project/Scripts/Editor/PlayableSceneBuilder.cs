@@ -753,6 +753,15 @@ namespace TNLorry.EditorTools
             PlayerSettings.companyName = "TN Lorry";
             PlayerSettings.productName = "TN Lorry Simulator";
 
+            // Required, and easy to miss: with no identifier set Unity falls back to
+            // com.DefaultCompany.*, which Play rejects outright and which makes the package
+            // hard to address with adb. Changing it after release is impossible — a new
+            // identifier is a new listing — so it is worth settling now rather than later.
+            PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, "com.tnlorry.simulator");
+
+            PlayerSettings.bundleVersion = "0.1.0";
+            PlayerSettings.Android.bundleVersionCode = 1;
+
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
             PlayerSettings.allowedAutorotateToPortrait = false;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
