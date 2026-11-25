@@ -64,3 +64,6 @@ desktop.ini
 /[Ss]erver[Dd]ata/
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/link.xml*
+
+# Stray backups from tooling experiments
+*.bak
