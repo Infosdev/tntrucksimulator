@@ -29,10 +29,14 @@ env:
   # Verified against https://unity.com/releases/editor/archive — there is no 6000.0.x in the
   # current archive; 6000.6 is the live stream. Core packages (URP) are pinned by Unity to
   # whatever editor version is used, so bumping this re-pins them automatically.
-  # 6000.6.x hits Unity bug UUM-146005: CLI builds fail with "script class layout is
-  # incompatible between the editor and the player". Fixed in 6000.7.0a6, so this is the
-  # first stream that can actually produce an APK from -executeMethod.
-  UNITY_VERSION: 6000.7.0b10
+  # Version choice is constrained from both sides:
+  #   - UUM-146005 (CLI builds fail with "script class layout is incompatible between the
+  #     editor and the player") affects 6000.2 through 6000.6 and is fixed in 6000.7.0a6.
+  #   - GameCI only publishes Docker images for release versions. Checked Docker Hub:
+  #     unityci/editor has ZERO tags matching 6000.7, so the fixed stream cannot run here.
+  # 6000.0.1f1 has an android image and is not on the issue's affected list. That is not a
+  # guarantee it is unaffected, so treat this run as the experiment it is.
+  UNITY_VERSION: 6000.0.1f1
   PROJECT_PATH: .
 
 jobs:
