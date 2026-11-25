@@ -147,6 +147,25 @@ Rules the code holds to:
 - **The event bus is for discrete facts** (a fine was issued, a delivery completed). Continuous
   values are polled — at 30 fps, polling one object beats publishing 60 events a second.
 
+## Packages
+
+`Packages/manifest.json` lists only what the code actually uses. Input System, Addressables,
+Localization, Splines, Cinemachine and Timeline were all removed, because none of them is
+referenced yet and every pinned version is another chance for package resolution to fail a
+build. Add each one back at the point you need it:
+
+| Package | Add it when |
+|---|---|
+| Addressables | `TileStreamer` outgrows Build Settings scenes (the call site is marked) |
+| Input System | you want gamepad support — rewrite the two files in `Scripts/Input/` |
+| Localization | you replace the hand-rolled `LocalizationService` |
+| Splines | the road-building tool starts generating geometry |
+| Cinemachine | `CameraRig` is not enough |
+
+Note that the runtime deliberately uses legacy `UnityEngine.Input`. With Input System absent
+that is simply the default; if you add the package back, set Player → Active Input Handling to
+**Both**, which `TN Lorry → Apply Android Build Settings` does for you.
+
 ## Things deliberately left as decisions
 
 - **Tamil text shaping (section P.2).** TextMeshPro does not shape Indic scripts out of the box.

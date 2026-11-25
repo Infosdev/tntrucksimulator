@@ -25,7 +25,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  UNITY_VERSION: 6000.0.26f1
+  # Must be a real editor version or every job fails instantly with "version not found".
+  # Verified against https://unity.com/releases/editor/archive — there is no 6000.0.x in the
+  # current archive; 6000.6 is the live stream. Core packages (URP) are pinned by Unity to
+  # whatever editor version is used, so bumping this re-pins them automatically.
+  UNITY_VERSION: 6000.6.8f1
   PROJECT_PATH: .
 
 jobs:
@@ -108,11 +112,14 @@ jobs:
           unityVersion: ${{ env.UNITY_VERSION }}
           projectPath: ${{ env.PROJECT_PATH }}
           targetPlatform: Android
-          # Development build: no keystore secrets needed, and it is installable for QA.
-          # The release AAB is built by the release workflow, which does need signing secrets.
+          # Development build: Unity generates a debug keystore, so CI needs no signing
+          # secrets. A release AAB would need them.
           androidAppBundle: false
           buildName: TNLorrySimulator
-          customParameters: -development
+          # Custom entry point, not the default build. It seeds the Phase 1 content and
+          # generates the playable scenes *before* building — without that the APK would
+          # contain no scenes at all and launch to a black screen.
+          buildMethod: TNLorry.EditorTools.CiBuild.AndroidDevelopment
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
