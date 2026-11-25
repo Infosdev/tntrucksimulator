@@ -29,7 +29,10 @@ env:
   # Verified against https://unity.com/releases/editor/archive — there is no 6000.0.x in the
   # current archive; 6000.6 is the live stream. Core packages (URP) are pinned by Unity to
   # whatever editor version is used, so bumping this re-pins them automatically.
-  UNITY_VERSION: 6000.6.8f1
+  # 6000.6.x hits Unity bug UUM-146005: CLI builds fail with "script class layout is
+  # incompatible between the editor and the player". Fixed in 6000.7.0a6, so this is the
+  # first stream that can actually produce an APK from -executeMethod.
+  UNITY_VERSION: 6000.7.0b10
   PROJECT_PATH: .
 
 jobs:
