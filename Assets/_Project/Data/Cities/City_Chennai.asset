@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52923a38c612b844b02aa16b73416f1, type: 3}
+  m_Name: City_Chennai
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.CityData
+  id: chennai
+  nameKey: city.chennai
+  depot: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  roadNodeId: 0
+  minimapUv: {x: 0, y: 0}
+  unlockLevel: 1
+  requiresCityIds: []
+  hasFuelStation: 1
+  hasGarage: 1
+  hasRestPoint: 1
+  hasTruckDealer: 1
+  producesCargoIds:
+  - containers
+  - auto_parts
+  consumesCargoIds:
+  - garments
+  - turmeric
+  - steel_coils
+  - eggs
+  - bananas
+  - cement
+  payoutMultiplier: 1.1
+  ambienceId: city_port
+  postcard: {fileID: 0}

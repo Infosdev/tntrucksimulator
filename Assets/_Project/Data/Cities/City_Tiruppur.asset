@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52923a38c612b844b02aa16b73416f1, type: 3}
+  m_Name: City_Tiruppur
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.CityData
+  id: tiruppur
+  nameKey: city.tiruppur
+  depot: 4
+  worldPosition: {x: -15928.6, y: 0, z: -10965.02}
+  roadNodeId: 6
+  minimapUv: {x: 0, y: 0}
+  unlockLevel: 9
+  requiresCityIds: []
+  hasFuelStation: 1
+  hasGarage: 0
+  hasRestPoint: 1
+  hasTruckDealer: 0
+  producesCargoIds:
+  - garments
+  consumesCargoIds:
+  - containers
+  - cement
+  payoutMultiplier: 1.15
+  ambienceId: industrial
+  postcard: {fileID: 0}

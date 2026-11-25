@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c101e948ba16d194ebd342e4a5a4a364, type: 3}
+  m_Name: EconomyConfig
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.EconomyConfig
+  startingMoney: 150000
+  startingReputation: 50
+  payoutScalar: 1
+  weightFactorPerTonne: 0.015
+  onTimeBonusMultiplier: 1.15
+  latePenaltyFloor: 0.55
+  latenessFullPenaltyMinutes: 45
+  cargoDamageMaxPenalty: 0.8
+  fuelEfficiencyBonus: 1200
+  cleanDrivingBonus: 1500
+  ghatRouteMultiplier: 1.35
+  hazardousMultiplier: 1.4
+  fragileMultiplier: 1.25
+  dieselPricePerLitre: 94
+  tollRatePerKm: 2.4
+  fastagDiscount: 0.05
+  garageRentPerDay: 2500
+  driverSalaryPerTrip: 3500
+  loanMonthlyInterest: 0.011
+  abandonPenaltyFraction: 0.25
+  fineOverspeed: 1000
+  fineRedLight: 1000
+  fineWrongSide: 1500
+  fineVehicleCollision: 500
+  finePedestrianCollision: 5000
+  fineNoHeadlights: 500
+  fineOverload: 2000
+  pedestrianReputationHit: 5
+  maxLevel: 60
+  xpPerHundredKm: 120
+  baseXpToLevel: 500
+  levelCurveExponent: 1.35
+  levelForBankLoan: 5
+  levelForOwnGarage: 10
+  levelForHiringDrivers: 20
+  minJobsPerDepot: 6
+  maxJobsPerDepot: 10
+  jobBoardRefreshHours: 24
+  plannedAverageSpeedKmh: 45
+  timeLimitSlack: 1.3
+  gameHoursPerRealMinute: 1
+  fatigueOnsetHours: 10
+  fatigueMaxHours: 14

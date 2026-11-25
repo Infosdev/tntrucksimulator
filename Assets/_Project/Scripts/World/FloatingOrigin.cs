@@ -32,7 +32,10 @@ namespace TNLorry.World
         /// <summary>Direct callback for systems that cannot afford the event bus in a hot path.</summary>
         public static event System.Action<Vector3> OnShift;
 
-        readonly List<ParticleSystem.Particle> _particleBuffer = new List<ParticleSystem.Particle>(1024);
+        // An array, not a List: ParticleSystem.GetParticles/SetParticles only accept
+        // Particle[]. It is reused across shifts and grown on demand rather than allocated
+        // per shift, because a shift already costs a full scene walk.
+        ParticleSystem.Particle[] _particleBuffer = new ParticleSystem.Particle[1024];
 
         void Awake()
         {
@@ -85,7 +88,12 @@ namespace TNLorry.World
             {
                 if (system.main.simulationSpace != ParticleSystemSimulationSpace.World) continue;
 
-                int count = system.GetParticles(_particleBuffer, system.particleCount);
+                // Heavy rain can exceed the initial buffer, and GetParticles silently
+                // truncates — leaving the overflow un-shifted and visibly stranded.
+                if (system.particleCount > _particleBuffer.Length)
+                    _particleBuffer = new ParticleSystem.Particle[Mathf.NextPowerOfTwo(system.particleCount)];
+
+                int count = system.GetParticles(_particleBuffer);
                 if (count == 0) continue;
 
                 for (int i = 0; i < count; i++)

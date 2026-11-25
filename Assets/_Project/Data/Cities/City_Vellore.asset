@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52923a38c612b844b02aa16b73416f1, type: 3}
+  m_Name: City_Vellore
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.CityData
+  id: vellore
+  nameKey: city.vellore
+  depot: 2
+  worldPosition: {x: -6218.7, y: 0, z: -890.56}
+  roadNodeId: 1
+  minimapUv: {x: 0, y: 0}
+  unlockLevel: 1
+  requiresCityIds: []
+  hasFuelStation: 1
+  hasGarage: 0
+  hasRestPoint: 1
+  hasTruckDealer: 0
+  producesCargoIds: []
+  consumesCargoIds:
+  - containers
+  - cement
+  - milk
+  payoutMultiplier: 1
+  ambienceId: town
+  postcard: {fileID: 0}

@@ -106,7 +106,13 @@ namespace TNLorry.Tests
         [Test]
         public void CannotHireTwoDriversOntoOneTruck()
         {
-            UnlockHiring();
+            // Level 25, not 20: at the gate level there is only one driver slot, so a second
+            // hire is refused as NoSlots before the one-driver-per-truck rule is ever reached.
+            // This test is about the truck rule, so the slot limit has to be out of the way.
+            while (_progression.Level < _config.levelForHiringDrivers + 5)
+                _progression.AwardXp(_progression.XpForLevel(_progression.Level));
+
+            Assert.Greater(_drivers.MaxDrivers, 1, "Need more than one slot to test the truck rule.");
             _drivers.Hire("Murugan", 3, SpareTruck, "nh44", 0, 8f);
 
             Assert.AreEqual(DriverService.HireResult.NoSpareTruck,

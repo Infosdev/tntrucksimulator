@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3ce7bd1ef5f91459fd3fe3f1e51dd8, type: 3}
+  m_Name: Truck_VaigaiVtractor4923
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.TruckData
+  id: vaigai_vtractor4923
+  nameKey: truck.vaigai_vtractor4923
+  fictionalBrand: Vaigai Trucks
+  layout: 2
+  thumbnail: {fileID: 0}
+  prefab: {fileID: 0}
+  massKg: 8500
+  centerOfMass: {x: 0, y: -0.34166667, z: 0.2}
+  maxPayloadKg: 36000
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 600
+      value: 1008
+      inSlope: 2.45
+      outSlope: 2.45
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1020
+      value: 2037
+      inSlope: 1.7520589
+      outSlope: 1.7520589
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1530
+      value: 2100
+      inSlope: -0.3556347
+      outSlope: -0.3556347
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2100
+      value: 1260
+      inSlope: -1.4736842
+      outSlope: -1.4736842
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  idleRpm: 600
+  maxRpm: 2200
+  redlineRpm: 2100
+  engineBrakeTorque: 1680
+  rpmResponse: 6
+  gearRatios:
+  - 12
+  - 7.3
+  - 4.6
+  - 2.9
+  - 1.85
+  - 1.17
+  - 1
+  - 0.73
+  finalDrive: 4.1
+  drivetrainEfficiency: 0.85
+  autoShift: 1
+  shiftTime: 0.55
+  maxSteerAngle: 36
+  steerRate: 90
+  maxBrakeTorque: 34000
+  brakeResponseTime: 0.25
+  retarderTorque: 7000
+  fuelCapacityLitres: 400
+  idleBurnLitresPerHour: 2.4
+  peakBurnLitresPerHour: 44
+  price: 4800000
+  unlockLevel: 24
+  repairCostPerPercent: 3600
+  antiRollStiffness: 60000
+  downforceCoefficient: 12

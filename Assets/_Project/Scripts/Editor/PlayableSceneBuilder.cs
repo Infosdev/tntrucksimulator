@@ -60,6 +60,7 @@ namespace TNLorry.EditorTools
             }
 
             EnsureFolder(MaterialDir);
+            EnsureDatabasePopulated(database);
 
             BuildWorldScene(database, economy, roads);
             BuildBootstrapScene(economy);
@@ -139,6 +140,64 @@ namespace TNLorry.EditorTools
 
             EnsureFolder(SceneDir);
             EditorSceneManager.SaveScene(scene, WorldScene);
+        }
+
+        /// <summary>
+        /// Repopulates the database from what is actually on disk when its arrays come back
+        /// empty.
+        ///
+        /// This is a load-order guard, not paranoia. When the seeder and this builder run in
+        /// one batch session, the GameDatabase that LoadAssetAtPath returns here can still be
+        /// the pre-seed instance, so `trucks` reads as empty and the scene gets built with no
+        /// vehicle in it — a build that succeeds and ships an empty world. Re-resolving by
+        /// asset type makes the order irrelevant, which matters most on a clean CI checkout
+        /// where everything is generated in a single run.
+        /// </summary>
+        static void EnsureDatabasePopulated(GameDatabase database)
+        {
+            // Always re-resolve rather than trusting the arrays. They can be populated while
+            // the id lookup still fails, because GameDatabase builds its id dictionary lazily
+            // and caches it — if anything called a getter while the arrays were empty, that
+            // empty dictionary is what every later lookup sees. Reloading ~30 assets is cheap
+            // next to shipping a world with no truck in it.
+            Debug.Log("[PlayableSceneBuilder] Re-resolving GameDatabase contents from disk.");
+
+            database.trucks = LoadAll<TruckData>(DataRoot + "/Trucks");
+            database.cargo  = LoadAll<CargoData>(DataRoot + "/Cargo");
+            database.cities = LoadAll<CityData>(DataRoot + "/Cities");
+            database.Build();
+
+            EditorUtility.SetDirty(database);
+            AssetDatabase.SaveAssets();
+
+            Debug.Log("[PlayableSceneBuilder] Re-resolved " + database.trucks.Length + " trucks, " +
+                      database.cargo.Length + " cargo, " + database.cities.Length + " cities.");
+        }
+
+        /// <summary>
+        /// Loads every asset of a type from a folder by enumerating the directory.
+        ///
+        /// Not AssetDatabase.FindAssets: that queries a search index which does not yet contain
+        /// assets created earlier in the same batch session, so it returns nothing and the
+        /// "repair" writes empty arrays straight back. Directory enumeration plus
+        /// LoadAssetAtPath has no index to be stale.
+        /// </summary>
+        static T[] LoadAll<T>(string folder) where T : ScriptableObject
+        {
+            var result = new List<T>();
+            if (!System.IO.Directory.Exists(folder)) return result.ToArray();
+
+            foreach (var file in System.IO.Directory.GetFiles(folder, "*.asset", System.IO.SearchOption.TopDirectoryOnly))
+            {
+                // LoadAssetAtPath wants a project-relative path with forward slashes.
+                var assetPath = file.Replace('\\', '/');
+                int index = assetPath.IndexOf("Assets/", System.StringComparison.Ordinal);
+                if (index > 0) assetPath = assetPath.Substring(index);
+
+                var asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+                if (asset != null) result.Add(asset);
+            }
+            return result.ToArray();
         }
 
         static void BuildGround(Transform parent)
@@ -703,7 +762,13 @@ namespace TNLorry.EditorTools
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel28;
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
-            PlayerSettings.SetApiCompatibilityLevel(NamedBuildTarget.Android, ApiCompatibilityLevel.NET_Unity_4_8);
+
+            // Deliberately NOT setting the API compatibility level. Forcing the player to
+            // .NET Framework 4.8 while the editor runs .NET Standard 2.1 makes the two
+            // disagree on the layout of HashSet, System.Type and pointer-bearing structs, and
+            // the build dies with "script class layout is incompatible between the editor and
+            // the player" pointing at Unity's own Collections/URP/TMP types. Unity 6's default
+            // is correct for this project; nothing here needs the wider surface.
 
             PlayerSettings.colorSpace = ColorSpace.Linear;
             Time.fixedDeltaTime = 0.02f;

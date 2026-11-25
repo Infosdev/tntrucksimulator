@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9c223be3d2f32e44a608863a1e03b75, type: 3}
+  m_Name: Cargo_Cement
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.CargoData
+  id: cement
+  nameKey: cargo.cement
+  icon: {fileID: 0}
+  massKg: 26000
+  requiredTrailer: 4
+  visualPrefab: {fileID: 0}
+  baseRatePerKm: 34
+  unlockLevel: 2
+  flags: 0
+  speedCapKmh: 0
+  fragilityMultiplier: 1
+  perishMinutes: 0
+  producedByCityIds:
+  - krishnagiri
+  consumedByCityIds:
+  - salem
+  - madurai
+  - coimbatore
+  - vellore
+  - karur
+  - dindigul

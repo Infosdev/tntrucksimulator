@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c5fc36164f18b4995353ce5241d3ac, type: 3}
+  m_Name: RoadGraph_Phase1_CentralCorridor
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Navigation.RoadGraphAsset
+  routeName: "Phase 1 \u2014 Central Corridor (NH48 / NH44 / NH544)"
+  nodes:
+  - id: 0
+    position: {x: 0, y: 0, z: 0}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: chennai
+  - id: 1
+    position: {x: -6218.7, y: 0, z: -890.56}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: vellore
+  - id: 2
+    position: {x: -11237.3, y: 0, z: -3116.96}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: krishnagiri
+  - id: 3
+    position: {x: -11619.15, y: 0, z: -7903.72}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: salem
+  - id: 4
+    position: {x: -11455.5, y: 0, z: -10352.76}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: namakkal
+  - id: 5
+    position: {x: -13910.25, y: 0, z: -9684.84}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: erode
+  - id: 6
+    position: {x: -15928.6, y: 0, z: -10965.02}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: tiruppur
+  - id: 7
+    position: {x: -18056.05, y: 0, z: -11465.96}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: coimbatore
+  - id: 8
+    position: {x: -11946.45, y: 0, z: -11799.92}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: karur
+  - id: 9
+    position: {x: -12491.95, y: 0, z: -15083.86}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: dindigul
+  - id: 10
+    position: {x: -11728.25, y: 0, z: -17532.9}
+    isIntersection: 1
+    hasSignal: 0
+    cityId: madurai
+  edges:
+  - from: 0
+    to: 1
+    lengthM: 7000
+    speedLimitKmh: 100
+    lanes: 3
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 1
+    to: 2
+    lengthM: 5000
+    speedLimitKmh: 100
+    lanes: 3
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 2
+    to: 3
+    lengthM: 5500
+    speedLimitKmh: 100
+    lanes: 3
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 3
+    to: 4
+    lengthM: 2750
+    speedLimitKmh: 90
+    lanes: 2
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 4
+    to: 8
+    lengthM: 2500
+    speedLimitKmh: 90
+    lanes: 2
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 8
+    to: 9
+    lengthM: 3750
+    speedLimitKmh: 90
+    lanes: 2
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 9
+    to: 10
+    lengthM: 3250
+    speedLimitKmh: 90
+    lanes: 2
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 3
+    to: 5
+    lengthM: 3250
+    speedLimitKmh: 90
+    lanes: 2
+    toll: 1
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 5
+    to: 6
+    lengthM: 2750
+    speedLimitKmh: 80
+    lanes: 2
+    toll: 0
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 6
+    to: 7
+    lengthM: 2500
+    speedLimitKmh: 80
+    lanes: 2
+    toll: 0
+    ghat: 0
+    urban: 1
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1
+  - from: 8
+    to: 5
+    lengthM: 3250
+    speedLimitKmh: 70
+    lanes: 1
+    toll: 0
+    ghat: 0
+    urban: 0
+    bridge: 0
+    unpaved: 0
+    bidirectional: 1

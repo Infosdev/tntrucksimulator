@@ -35,7 +35,13 @@ namespace TNLorry.EditorTools
         {
             try
             {
-                Log("Preparing project…");
+                Log("Preparing project...");
+
+                // 0. Android toolchain paths. The JDK/SDK/NDK can all be installed and the
+                //    build will still fail with "JDK not found", because a fresh editor has no
+                //    EditorPrefs telling it to use its own embedded copies. Nothing else sets
+                //    these in batch mode, so CI must.
+                ConfigureAndroidTools();
 
                 // 1. Player settings. Must happen before the build and before scene generation,
                 //    because the generated scenes are laid out for landscape.
@@ -43,12 +49,12 @@ namespace TNLorry.EditorTools
 
                 // 2. Content. The seeder is idempotent — it matches assets by id and updates in
                 //    place — so re-running it on every CI build is safe.
-                Log("Seeding Phase 1 content…");
+                Log("Seeding Phase 1 content...");
                 Phase1ContentSeeder.Seed();
                 Phase1ContentSeeder.Validate();
 
                 // 3. Scenes. Also regenerated every build, and registered in Build Settings.
-                Log("Generating playable scenes…");
+                Log("Generating playable scenes...");
                 PlayableSceneBuilder.BuildAll();
 
                 AssetDatabase.SaveAssets();
@@ -105,6 +111,60 @@ namespace TNLorry.EditorTools
                 // times out, which reads as a mysterious CI failure rather than a build error.
                 Fail("Unhandled exception: " + e);
             }
+        }
+
+        /// <summary>
+        /// Points Unity at the JDK, SDK, NDK and Gradle that ship with the Android module.
+        ///
+        /// "JDK not found" with a JDK plainly on disk is the symptom this fixes. Unity decides
+        /// where to look from EditorPrefs, and on a machine where nobody has ever opened the
+        /// Preferences window those keys do not exist, so it looks nowhere. Both the
+        /// use-embedded booleans and the explicit paths are written: the booleans are what
+        /// Unity actually honours, the paths make the resolved location visible in the log and
+        /// cover editor versions that read them directly.
+        /// </summary>
+        static void ConfigureAndroidTools()
+        {
+            // <editor>/Data/PlaybackEngines/AndroidPlayer
+            string androidPlayer = Path.Combine(EditorApplication.applicationContentsPath,
+                                                "PlaybackEngines", "AndroidPlayer");
+
+            if (!Directory.Exists(androidPlayer))
+            {
+                Debug.LogError("[CiBuild] Android module not found at " + androidPlayer +
+                               ". Install it with: unity install-modules --editor-version " +
+                               "<ver> -m android --child-modules --reinstall");
+                return;
+            }
+
+            string jdk = Path.Combine(androidPlayer, "OpenJDK");
+            string sdk = Path.Combine(androidPlayer, "SDK");
+            string ndk = Path.Combine(androidPlayer, "NDK");
+            string gradle = Path.Combine(androidPlayer, "Tools", "gradle");
+
+            // Prefer the embedded toolchain. Mixing a system JDK with Unity's NDK is a
+            // well-known source of Gradle failures, so do not go looking for one.
+            EditorPrefs.SetBool("JdkUseEmbedded", true);
+            EditorPrefs.SetBool("SdkUseEmbedded", true);
+            EditorPrefs.SetBool("NdkUseEmbedded", true);
+            EditorPrefs.SetBool("GradleUseEmbedded", true);
+
+            if (Directory.Exists(jdk))    EditorPrefs.SetString("JdkPath", jdk);
+            if (Directory.Exists(sdk))    EditorPrefs.SetString("AndroidSdkRoot", sdk);
+            if (Directory.Exists(ndk))    EditorPrefs.SetString("AndroidNdkRoot", ndk);
+            if (Directory.Exists(gradle)) EditorPrefs.SetString("GradlePath", gradle);
+
+            Log("Android tools: jdk=" + Directory.Exists(jdk) +
+                " sdk=" + Directory.Exists(sdk) +
+                " ndk=" + Directory.Exists(ndk) +
+                " gradle=" + Directory.Exists(gradle));
+
+            // A missing java executable here means the module reported success without
+            // extracting, which the Unity CLI does do. Fail loudly rather than at link time.
+            string java = Path.Combine(jdk, "bin", "java.exe");
+            if (!File.Exists(java) && !File.Exists(Path.Combine(jdk, "bin", "java")))
+                Debug.LogError("[CiBuild] No java executable under " + jdk +
+                               ". Re-run the module install with --reinstall.");
         }
 
         static string[] EnabledScenes()

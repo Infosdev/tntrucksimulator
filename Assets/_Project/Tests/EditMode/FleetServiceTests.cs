@@ -91,8 +91,12 @@ namespace TNLorry.Tests
         [Test]
         public void CannotBuyWhatYouCannotAfford()
         {
+            // BigTruck is level-gated at 8, and FleetService checks level before affordability,
+            // so without levelling first this would assert the wrong refusal reason.
+            LevelUpTo(8);
             long before = _economy.Balance;
 
+            Assert.Less(before, _database.GetTruck(BigTruck).price, "Precondition: genuinely unaffordable.");
             Assert.AreEqual(FleetService.PurchaseResult.CannotAfford, _fleet.BuyOutright(BigTruck));
             Assert.AreEqual(before, _economy.Balance, "A refused purchase must not move the balance.");
             Assert.AreEqual(0, _fleet.TruckCount);

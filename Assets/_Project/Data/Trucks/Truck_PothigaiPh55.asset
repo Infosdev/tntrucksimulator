@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3ce7bd1ef5f91459fd3fe3f1e51dd8, type: 3}
+  m_Name: Truck_PothigaiPh55
+  m_EditorClassIdentifier: TNLorry.Runtime::TNLorry.Data.TruckData
+  id: pothigai_ph55
+  nameKey: truck.pothigai_ph55
+  fictionalBrand: Pothigai Heavy
+  layout: 1
+  thumbnail: {fileID: 0}
+  prefab: {fileID: 0}
+  massKg: 9500
+  centerOfMass: {x: 0, y: -0.35833332, z: 0.2}
+  maxPayloadKg: 34000
+  torqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 580
+      value: 1152
+      inSlope: 2.9577467
+      outSlope: 2.9577467
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 977.6
+      value: 2328
+      inSlope: 2.1151617
+      outSlope: 2.1151617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1460.4
+      value: 2400
+      inSlope: -0.42933768
+      outSlope: -0.42933768
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2000
+      value: 1440
+      inSlope: -1.7790956
+      outSlope: -1.7790956
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  idleRpm: 580
+  maxRpm: 2100
+  redlineRpm: 2000
+  engineBrakeTorque: 1920
+  rpmResponse: 6
+  gearRatios:
+  - 11
+  - 6.8
+  - 4.3
+  - 2.7
+  - 1.74
+  - 1.1
+  - 1
+  - 0.72
+  - 0.62
+  finalDrive: 3.7
+  drivetrainEfficiency: 0.85
+  autoShift: 1
+  shiftTime: 0.55
+  maxSteerAngle: 37
+  steerRate: 90
+  maxBrakeTorque: 38000
+  brakeResponseTime: 0.25
+  retarderTorque: 9000
+  fuelCapacityLitres: 500
+  idleBurnLitresPerHour: 2.1
+  peakBurnLitresPerHour: 42
+  price: 7200000
+  unlockLevel: 34
+  repairCostPerPercent: 5400
+  antiRollStiffness: 60000
+  downforceCoefficient: 12
