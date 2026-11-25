@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TNLorry.Core;
 using TNLorry.Data;
 using TNLorry.Gameplay;
 using TNLorry.InputSystem;
@@ -7,6 +8,7 @@ using TNLorry.Traffic;
 using TNLorry.Vehicle;
 using TNLorry.World;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -366,9 +368,15 @@ namespace TNLorry.EditorTools
             root.AddComponent<DamageSystem>();
             root.AddComponent<OdometerTracker>();
 
+            // No lamp meshes to assign yet, which TruckLights handles — every array is
+            // null-checked. It has to exist regardless, or the headlight state is always "off"
+            // and the no-headlights fine fires the moment night falls.
+            var lights = root.AddComponent<TruckLights>();
+
             var rules = root.AddComponent<TrafficRuleMonitor>();
             var rulesSo = new SerializedObject(rules);
             rulesSo.FindProperty("truck").objectReferenceValue = root.GetComponent<TruckController>();
+            rulesSo.FindProperty("lights").objectReferenceValue = lights;
             rulesSo.ApplyModifiedProperties();
 
             var camera = BuildCameraRig(root);
@@ -476,6 +484,9 @@ namespace TNLorry.EditorTools
             sources.GetArrayElementAtIndex(1).objectReferenceValue = touch;
 
             so.FindProperty("cameraRig").objectReferenceValue = camera;
+            // Without this the router's `if (lights != null)` guard swallows every
+            // headlight, hazard and indicator press.
+            so.FindProperty("lights").objectReferenceValue = truck.GetComponent<TruckLights>();
             so.ApplyModifiedProperties();
 
             return touch;

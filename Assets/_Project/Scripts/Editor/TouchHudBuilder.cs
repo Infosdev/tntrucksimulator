@@ -467,7 +467,11 @@ namespace TNLorry.EditorTools
             label.alignment = alignment;
             label.color = Color.white;
             label.raycastTarget = false;
-            label.enableWordWrapping = false;
+
+            // Deliberately not touching the wrapping property: `enableWordWrapping` is obsolete
+            // in current TMP and `textWrappingMode` does not exist in older versions, so either
+            // choice risks breaking the build on a TMP version we have not pinned. Every label
+            // here is a short token in a generously sized box, and Overflow handles the rest.
             label.overflowMode = TextOverflowModes.Overflow;
 
             if (_font != null) label.font = _font;
