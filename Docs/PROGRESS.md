@@ -1,8 +1,12 @@
 # Build progress against the Master Task Checklist
 
-Tracks Appendix 3 of the development guide. Status is honest: **Code** means the system is
-written but has never been compiled or run; **Done** means verified in the editor on a device.
-Nothing is Done yet — there is no Unity install on the machine this was built on.
+Tracks Appendix 3 of the development guide. Status is honest: `[~]` means the code is written
+but has never been compiled or run; `[x]` means verified in the editor or on a device.
+
+**Nothing is `[x]` yet.** The project was written with no Unity install available, so every
+item below is unverified by a compiler. Unity 6000.6.8f1 with Android Build Support is now
+being installed locally and a Unity Personal licence is active, so the first real compile is
+imminent — expect this file to change a lot once it happens.
 
 Legend: `[ ]` not started · `[~]` code written, unverified · `[x]` verified
 
@@ -78,13 +82,22 @@ Legend: `[ ]` not started · `[~]` code written, unverified · `[x]` verified
 - [~] Hire AI drivers (passive income) — `Gameplay/DriverService.cs`: skill-tiered hiring fees,
       one driver per spare truck (never the player's own), trips resolving on the in-game clock
       with a skill-dependent incident rate, projected daily income. **No company-screen UI**
-- [ ] Customization (lorry art, horns, lights, accessories) — `OwnedTruckSave` carries cosmetic
-      and paint fields; no editor yet
+- [~] Customization (lorry art, horns, lights, accessories) — `Data/CosmeticData.cs`,
+      `CosmeticCatalogue.cs`, `Gameplay/CustomizationService.cs`. Ownership is account-wide and
+      fitting is per-truck, so a panel bought once moves between lorries; art slots replace,
+      accessories stack; paint, Gold currency, and a player-written name panel that accepts
+      Tamil. **No garage UI, and no cosmetic assets exist yet**
 - [~] Daily missions & login rewards — `Gameplay/DailyService.cs`: 7-day login streak that
       wraps while the continuous count keeps climbing, and three deterministic missions per
       real-world day across seven types. Hooked into the delivery flow and `OdometerTracker`.
       **No missions/rewards UI**
 - [ ] Tutorial
+- [~] On-screen driving controls — `Editor/TouchHudBuilder.cs` generates the Canvas: steering,
+      pedals, gear, handbrake, retarder, horn, lights, camera, plus live speed/gear/RPM/fuel
+      and money/level/clock readouts wired to `HudController`. `UI/SafeAreaFitter.cs` keeps it
+      clear of the notch, which in landscape sits exactly where the steering buttons go.
+      Press-and-hold goes through `EventTrigger` PointerDown/Up/**Exit** — without Exit,
+      sliding a thumb off the throttle leaves it stuck on
 
 ## Content (Phase 1)
 
@@ -138,6 +151,8 @@ Legend: `[ ]` not started · `[~]` code written, unverified · `[x]` verified
       - `DriverServiceTests` — hiring gates and slots, trip scheduling across midnight, economics
       - `DailyServiceTests` — streak build/break/wrap on an injected clock, mission determinism
         within a day, progress not carrying over, per-type match rules, fractional distance
+      - `CustomizationServiceTests` — rupee vs Gold purchases, slot replacement vs accessory
+        stacking, per-truck fitting, paint hex round trip, and the Tamil name panel
       - `SaveSystemTests` — field round-trip, encryption at rest, backup recovery from a
         corrupt main file, atomic-write leftovers, migration behaviour
       - `FormattingTests` — Indian lakh/crore grouping, and the FlatJson `\u` decoding that
@@ -157,6 +172,11 @@ Legend: `[ ]` not started · `[~]` code written, unverified · `[x]` verified
   Now a plain string comparison, with an `AIVehicle` component check as a fallback.
 - `CurrencyFormat` used the current culture, so a device set to a comma-decimal locale rendered
   "₹45,2K". Pinned to `InvariantCulture`.
+- **The name panel rejected Tamil.** `CustomizationService` validated with
+  `char.IsLetterOrDigit`, which returns false for Tamil vowel signs and the virama — `ா` is a
+  SpacingCombiningMark, `்` a NonSpacingMark. "அம்மா துணை", the example panel in the guide,
+  came back as InvalidCharacters. Combining marks are now allowed; format characters (Cf) are
+  still rejected, so an RTL override cannot be smuggled into a rendered texture.
 
 ## What to do next, in order
 

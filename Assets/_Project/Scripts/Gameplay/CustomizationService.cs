@@ -253,10 +253,7 @@ namespace TNLorry.Gameplay
 
             foreach (char c in text)
             {
-                // Letters (any script, so Tamil passes), digits, spaces and a little punctuation.
-                // Control characters and format characters are rejected: a right-to-left override
-                // in a rendered-to-texture string is a glyph-shaping problem, not a feature.
-                if (char.IsLetterOrDigit(c) || c == ' ' || c == '.' || c == '-' || c == '\'') continue;
+                if (IsAllowedNamePlateChar(c)) continue;
                 return NamePlateResult.InvalidCharacters;
             }
 
@@ -265,6 +262,28 @@ namespace TNLorry.Gameplay
 
             EventBus.Publish(new NamePlateChangedEvent { Text = text });
             return NamePlateResult.Success;
+        }
+
+        /// <summary>
+        /// Letters, digits, combining marks, spaces and a little punctuation.
+        ///
+        /// The combining marks are the part that matters. `char.IsLetterOrDigit` alone returns
+        /// FALSE for Tamil vowel signs and the virama — "ா" is a SpacingCombiningMark and "்"
+        /// a NonSpacingMark — so a letters-only check rejects "அம்மா துணை", which is the
+        /// example name panel in the design guide. Tamil is the game's primary language; an
+        /// English-only name plate would be an embarrassing bug to ship.
+        ///
+        /// Format characters (Cf) stay rejected on purpose: a right-to-left override inside a
+        /// string that gets rendered to a texture is a glyph-shaping problem, not a feature.
+        /// </summary>
+        public static bool IsAllowedNamePlateChar(char c)
+        {
+            if (char.IsLetterOrDigit(c)) return true;
+            if (c == ' ' || c == '.' || c == '-' || c == '\'') return true;
+
+            var category = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+            return category == System.Globalization.UnicodeCategory.NonSpacingMark ||
+                   category == System.Globalization.UnicodeCategory.SpacingCombiningMark;
         }
 
         public bool ClearNamePlate()
